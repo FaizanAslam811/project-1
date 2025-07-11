@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Services - Staging</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fff;
+      color: #333;
+    }
+
+    .hero-wrapper {
+      background: url('imgban.jpg') no-repeat center/cover;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+      background: transparent;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .logo .dot {
+      color: orange;
+    }
+
+    .navbar {
+      display: flex;
+      gap: 20px;
+    }
+    .navbar a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+    .navbar a:hover,
+    .navbar a.active {
+      color: orange;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      background: white;
+      display: none;
+      flex-direction: column;
+      min-width: 160px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .dropdown:hover .dropdown-menu {
+      display: flex;
+    }
+    .dropdown-menu a {
+      color: #333;
+      padding: 10px;
+      text-decoration: none;
+    }
+    .dropdown-menu a:hover {
+      background: orange;
+      color: #fff;
+    }
+
+    .contact-info p {
+      color: #ccc;
+      font-size: 0.65rem;
+      margin: 0;
+    }
+    .contact-info strong {
+      color: orange;
+      font-size: 1rem;
+    }
+
+    .hero {
+      text-align: center;
+      color: #fff;
+      padding: 160px 20px 60px;
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .hero p {
+      font-size: 1.1rem;
+    }
+
+    .breadcrumb-active {
+      color: orange;
+    }
+
+    .section-title {
+      text-align: center;
+      padding: 40px 0 20px;
+    }
+
+    .section-title h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .section-title h3 {
+      font-size: 20px;
+      font-weight: 400;
+      color: #c89b64;
+    }
+
+    .services {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px 40px;
+    }
+
+    .service {
+      flex: 1 1 250px;
+      max-width: 300px;
+    }
+
+    .service h3 {
+      color: #000;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .service p {
+      color: #707070;
+    }
+
+    .service ul {
+      list-style: none;
+      padding: 0;
+      color: #333;
+    }
+
+    .service ul li::before {
+      content: "- ";
+      color: orange;
+    }
+
+    .stats {
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: space-around;
+      padding: 40px 0;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .stats div {
+      text-align: center;
+    }
+
+    .stats div span {
+      font-size: 2rem;
+      color: orange;
+    }
+
+    .clients {
+      text-align: center;
+      padding: 40px 0;
+      overflow: hidden;
+    }
+
+    .clients h3 {
+      color: orange;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+    }
+
+    .clients h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 30px;
+    }
+
+    .clients-logos-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .clients-logos {
+      display: flex;
+      gap: 40px;
+      flex-wrap: nowrap;
+      padding: 20px;
+      animation: scrollLogos 20s linear infinite;
+      filter: grayscale(100%);
+    }
+
+    .clients-logos img {
+      height: 60px;
+      flex-shrink: 0;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .clients-logos img:hover {
+      filter: grayscale(0%);
+      transform: scale(1.1);
+    }
+
+    @keyframes scrollLogos {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    footer.footer {
+      background: url('imgfoo.jpg') no-repeat center/cover;
+      color: #fff;
+      padding: 40px 60px;
+      animation: fadeInUp 1.2s ease;
+    }
+
+    .ready {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .ready input {
+      padding: 10px;
+      width: 300px;
+      border: none;
+      outline: none;
+    }
+
+    .ready button {
+      padding: 11px;
+      background: orange;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .ready button:hover {
+      background: #ff9800;
+      transform: scale(1.1);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .footer-grid div {
+      flex: 1;
+      min-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .footer h3 span {
+      color: orange;
+    }
+
+    .footer h4 {
+      color: orange;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .footer .social i {
+      margin-right: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .footer .social i:hover {
+      transform: scale(1.2);
+      color: orange;
+    }
+
+    .copyright {
+      border-top: 1px solid #333;
+      text-align: center;
+      padding: 20px 0;
+      font-size: .9rem;
+    }
+
+    a {
+      color: orange;
+      text-decoration: none;
+    }
+
+    @media(max-width:768px) {
+      .hero-content h1 {
+        font-size: 32px;
+      }
+
+      .hero-content p {
+        font-size: 14px;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .navbar {
+        gap: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .ready {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* New global <p> style */
+    p {
+      font-size: 15px;
+      font-family: "Poppins", sans-serif;
+      color: #707070;
+      font-weight: 400;
+      line-height: 26px;
+      margin: 0 0 15px 0;
+    }
+  </style>
+</head>
+<body>
+</head>
+<body>
+  <div class="hero-wrapper">
+    <header>
+      <div class="logo">Staging<span class="dot">.</span></div>
+      <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="Project.html">Projects</a>
+        <a href="aout.html">About</a>
+        <div class="dropdown">
+          <a href="#">Pages</a>
+          <div class="dropdown-menu">
+            <a href="Project.html">Project details</a>
+            <a href="Aout.html">About</a>
+            <a href="Services.html" class="active">Services</a>
+            <a href="Blog.html">Blog</a>
+          </div>
+        </div>
+        <a href="Blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="contact-info">
+        <p>Call us for any questions</p>
+        <strong>+01 123 456 789</strong>
+      </div>
+    </header>
+    <section class="hero">
+      <div>
+        <h1>OUR SERVICES</h1>
+        <p>Home ~ <span class="breadcrumb-active">Our Services</span></p>
+      </div>
+    </section>
+  </div>
+
+  <div class="section-title">
+    <h2>OUR SPECIALIZATION</h2>
+    <h3>WHAT WE DO</h3>
+  </div>
+
+  <section class="services">
+    <div class="service">
+      <h3><i class="fas fa-couch" style="color: orange; margin-right: 8px;"></i>INTERIOR DESIGN</h3>
+      <p>As you might expect of a company that began as a high-end interiors contractor, we pay strict attention.</p>
+      <ul>
+        <li>Energy allocation</li>
+        <li>Fire protection, safety</li>
+        <li>Lifts and escalators</li>
+        <li>Facade engineering</li>
+      </ul>
+    </div>
+
+    <div class="service">
+      <h3><i class="fas fa-briefcase" style="color: orange; margin-right: 8px;"></i>OFFICE DESIGN</h3>
+      <p>Our commitment to exceptional quality has never wavered. Today ranks as one of the most highly-regarded construction firms.</p>
+      <ul>
+        <li>Active system</li>
+        <li>Air conditioning</li>
+        <li>BSRIA blue book</li>
+        <li>Building services engineer</li>
+      </ul>
+    </div>
+
+    <div class="service">
+      <h3><i class="fas fa-house-user" style="color: orange; margin-right: 8px;"></i>HOME DESIGN</h3>
+      <p>Interdisciplinary architectural studio with cultural, residential, and commercial projects built worldwide.</p>
+      <ul>
+        <li>Pipework</li>
+        <li>Plant room</li>
+        <li>Plumbing</li>
+        <li>Rules of Thumb</li>
+      </ul>
+    </div>
+
+    <div class="service">
+      <h3><i class="fas fa-pencil-ruler" style="color: orange; margin-right: 8px;"></i>DESIGN DRAWING</h3>
+      <p>Creating architectural and creative solutions to help people realize their vision.</p>
+      <ul>
+        <li>Guidelines for building</li>
+        <li>Thermal comfort</li>
+        <li>Types of building services</li>
+        <li>Types of heating system</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div><span>85</span><br>PROJECTS COMPLETED</div>
+    <div><span>127</span><br>HAPPY CLIENTS</div>
+    <div><span>36</span><br>AWARDS RECEIVED</div>
+    <div><span>74</span><br>CUPS OF COFFEE</div>
+  </section>
+
+  <section class="clients">
+    <h3>BRANDING</h3>
+    <h2>OUR CLIENTS</h2>
+    <div class="clients-logos-wrapper">
+      <div class="clients-logos">
+        <img src="Stack.jpeg" alt="Stackture" />
+        <img src="Craf.jpeg" alt="Craftgenic" />
+        <img src="Stack.jpeg" alt="Designripple" />
+        <img src="neural.jpeg" alt="Neural Construct" />
+        <img src="rebel.jpeg" alt="Rebel Architect" />
+        <!-- Duplicates for scroll effect -->
+        <img src="Stack.jpeg" alt="Stackture" />
+        <img src="Craf.jpeg" alt="Craftgenic" />
+        <img src="Stack.jpeg" alt="Designripple" />
+        <img src="neural.jpeg" alt="Neural Construct" />
+        <img src="rebel.jpeg" alt="Rebel Architect" />
+      </div>
+    </div>
+  </section>
+</body>
+</html>
+
+  <!-- Existing sections here -->
+
+  <footer class="footer">
+    <div class="ready">
+      <h2>READY TO WORK WITH US?</h2>
+      <input type="email" placeholder="Enter your email..." required>
+      <button><i class="fa fa-paper-plane"></i></button>
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <h3>Staging<span>.</span></h3>
+        <p>7176 Blue Spring Lane<br>Santa Monica, CA 90403</p>
+        <p>info.colorlib@gmail.com<br>+84 123 456 789</p>
+        <div class="social">
+          <i class="fab fa-facebook-f"></i>
+          <i class="fab fa-twitter"></i>
+          <i class="fab fa-instagram"></i>
+          <i class="fab fa-linkedin-in"></i>
+        </div>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <p>About Us</p>
+        <p>Services</p>
+        <p>Our Works</p>
+        <p>Career</p>
+        <p>FAQs</p>
+      </div>
+
+      <div>
+        <h4>Services</h4>
+        <p>Architecture</p>
+        <p>Interior Design</p>
+        <p>Exterior Design</p>
+        <p>Planning</p>
+      </div>
+
+      <div>
+        <h4>Get in Touch</h4>
+        <p>7176 Blue Spring Lane<br>Santa Monica, CA 90403</p>
+        <p>info.colorlib@gmail.com<br>+84 123 456 789</p>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <p>Copyright © 2025 All rights reserved | This template is made with ♡ by Colorlib</p>
+      <p><a href="#">Terms of use</a> | <a href="#">Privacy Policy</a></p>
+    </div>
+  </footer>
+</body>
+</html>
+

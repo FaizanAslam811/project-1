@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staging</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      background: #f9f9f9;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo .dot {
+      color: orange;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .nav-links li a:hover {
+      color: orange;
+    }
+
+    .nav-links li a.active::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: orange;
+    }
+
+    .nav-links .dropdown {
+      position: relative;
+    }
+
+    .nav-links .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      min-width: 180px;
+      list-style: none;
+      padding: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-links .dropdown:hover .dropdown-menu {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      flex-direction: column;
+    }
+
+    .nav-links .dropdown-menu li {
+      padding: 10px 20px;
+      white-space: nowrap;
+    }
+
+    .nav-links .dropdown-menu li a {
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      display: block;
+      transition: 0.3s ease;
+    }
+
+    .nav-links .dropdown-menu li a:hover {
+      background-color: orange;
+      color: white;
+      border-radius: 4px;
+    }
+
+    .phone {
+      text-align: right;
+      font-size: 14px;
+    }
+
+    .phone span {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .hero {
+      background: url("img.jpg") no-repeat center center/cover;
+      height: 100vh;
+      color: white;
+      position: relative;
+    }
+
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .hero-content h1 {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    .see-project {
+      position: relative;
+      display: inline-block;
+      padding: 12px 30px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .see-project::before,
+    .see-project::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 2px solid white;
+      transition: all 0.3s ease;
+    }
+
+    .see-project::before {
+      top: 0;
+      left: 0;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .see-project::after {
+      bottom: 0;
+      right: 0;
+      border-left: none;
+      border-top: none;
+    }
+
+    .see-project:hover::before,
+    .see-project:hover::after {
+      width: 100%;
+      height: 100%;
+    }
+
+    .slider-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
+      transform: translateY(-50%);
+    }
+
+    .arrow {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 10px;
+      transition: 0.3s ease;
+    }
+
+    .pagination {
+      position: absolute;
+      bottom: 50px;
+      left: 60px;
+      font-weight: bold;
+    }
+
+    .pagination span {
+      margin-right: 15px;
+      opacity: 0.7;
+    }
+
+    .pagination .active {
+      border-bottom: 2px solid white;
+      opacity: 1;
+    }
+
+    .discover-more {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      opacity: 0.8;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+    }
+
+    .discover-more:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .social-icons {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+    }
+
+    .social-icons a {
+      color: white;
+      margin-left: 15px;
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    .about-section {
+      padding: 80px 40px;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+    }
+
+    .about-container {
+      display: flex;
+      align-items: center;
+      max-width: 1200px;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .about-text h4 {
+      color: #e1a87a;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .about-text h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.3;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .about-text p {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .primary-btn {
+      position: relative;
+      display: inline-block;
+      padding: 12px 30px;
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .primary-btn::before,
+    .primary-btn::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 2px solid black;
+      transition: all 0.3s ease;
+    }
+
+    .primary-btn::before {
+      top: 0;
+      left: 0;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .primary-btn::after {
+      bottom: 0;
+      right: 0;
+      border-left: none;
+      border-top: none;
+    }
+
+    .primary-btn:hover::before,
+    .primary-btn:hover::after {
+      width: 100%;
+      height: 100%;
+      border-color: orange;
+    }
+
+    .primary-btn:hover {
+      color: orange;
+    }
+
+    .about-image {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .about-image img {
+      width: 70%;
+      border: 15px solid #f7f5ee;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .subheading {
+      text-align: center;
+      font-size: 0.9em;
+      color: #d4a373;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 2em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .testimonial-section {
+      margin: 50px auto;
+      width: 70%;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.2em;
+    }
+
+    .testimonial-avatar {
+      text-align: center;
+    }
+
+    .testimonial-avatar img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .testimonial-name {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .testimonial-role {
+      color: #d4a373;
+      font-size: 0.85em;
+    }
+
+    .arrow.left, .arrow.right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .arrow.left { left: 10px; }
+    .arrow.right { right: 10px; }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <nav class="navbar">
+    <div class="logo">Staging<span class="dot">.</span></div>
+    <ul class="nav-links">
+      <li><a href="indn.html" class="active">Home</a></li>
+      <li><a href="Project.html">Projects</a></li>
+      <li><a href="Aout.html">About</a></li>
+      <li class="dropdown">
+        <a href="#">Pages </i></a>
+        <ul class="dropdown-menu">
+          <li><a href="Project.html">Project details</a></li>
+          <li><a href="Aout.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="Blog.html">Blog</a></li>
+        </ul>
+      </li>
+      <li><a href="Blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="phone">
+      <p>Call us for any questions</p>
+      <span>+01 123 456 789</span>
+    </div>
+  </nav>
+
+  <div class="hero-content">
+    <h1>QUALITY IS NOT ONLY<br>OUR STANDARD.</h1>
+    <a href="#" class="see-project">See Project <i class="fas fa-arrow-right"></i></a>
+  </div>
+
+  <div class="slider-controls">
+    <button class="arrow left" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
+    <button class="arrow right" aria-label="Next Slide"><i class="fas fa-chevron-right"></i></button>
+  </div>
+
+  
+
+  <a href="#more" class="discover-more">Discover more</a>
+
+  <div class="social-icons">
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+</header>
+
+<section class="about-section">
+  <div class="about-container">
+    <div class="about-text">
+      <h4>WHO ARE WE</h4>
+      <h2>WE PROPOSE AND<br>DISCUSS DESIGN RULES</h2>
+      <p>Metasurfaces are generally designed by placing scatterers in periodic or pseudo-periodic grids. We propose and discuss design rules for functional metasurfaces with randomly placed.</p>
+      <p>Anisotropic elements that randomly sample. Quisque sit amet nisl ante. Fusce lacinia non tellus id gravida. Cras neque dolor, volutpat et hendrerit et.</p>
+      <a href="#" class="primary-btn normal-btn">Learn More</a>
+    </div>
+    <div class="about-image">
+      <img src="img1.jpg" alt="About our design team" />
+    </div>
+  </div>
+</section>
+<!-- LATEST PROJECTS SECTION -->
+<!-- LATEST PROJECTS SECTION -->
+<div style="padding: 80px 40px; background-color: #fff; font-family: 'Poppins', sans-serif;">
+  <div class="subheading" style="text-align: center; color: #FF7F50; letter-spacing: 2px;">OUR WORKS</div>
+  <h2 style="text-align: center; font-size: 36px; margin-top: 10px;">LATEST PROJECTS</h2>
+
+  <div style="position: relative; margin-top: 50px;">
+    <!-- Scroll Left Button -->
+    <button onclick="scrollProjects('left')" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 1; background-color: rgba(0,0,0,0.5); border: none; color: white; font-size: 24px; padding: 10px 15px; cursor: pointer; border-radius: 50%;">
+      &#10094;
+    </button>
+
+    <!-- Image Carousel -->
+    <div id="project-scroll" style="display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 30px; padding: 20px 50px; scroll-snap-type: x mandatory;">
+      <div style="flex: 0 0 auto; scroll-snap-align: center; text-align: center;">
+        <img src="shop.jpg" alt="Project 1" style="width: 400px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+        <p style="margin-top: 10px; font-size: 16px; color: #333;">Modern Shop Interior</p>
+      </div>
+      <div style="flex: 0 0 auto; scroll-snap-align: center; text-align: center;">
+        <img src="img of.jpg" alt="Project 2" style="width: 400px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+        <p style="margin-top: 10px; font-size: 16px; color: #333;">Office Space Renovation</p>
+      </div>
+      <div style="flex: 0 0 auto; scroll-snap-align: center; text-align: center;">
+        <img src="img7.jpg" alt="Project 3" style="width: 400px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+        <p style="margin-top: 10px; font-size: 16px; color: #333;">Contemporary Living Room</p>
+      </div>
+      <div style="flex: 0 0 auto; scroll-snap-align: center; text-align: center;">
+        <img src="img1 (4).jpeg" alt="Project 4" style="width: 400px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+        <p style="margin-top: 10px; font-size: 16px; color: #333;">Elegant Bedroom Setup</p>
+      </div>
+    </div>
+
+    <!-- Scroll Right Button -->
+    <button onclick="scrollProjects('right')" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 1; background-color: rgba(0,0,0,0.5); border: none; color: white; font-size: 24px; padding: 10px 15px; cursor: pointer; border-radius: 50%;">
+      &#10095;
+    </button>
+  </div>
+
+  <script>
+    function scrollProjects(direction) {
+      const container = document.getElementById('project-scroll');
+      const scrollAmount = 450;
+      container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  </script>
+</div>
+
+
+  <!-- WHAT WE DO Section -->
+  <div style="text-align: center; margin-top: 80px;">
+    <div class="subheading" style="margin-bottom: 10px; color: #FF7F50; letter-spacing: 2px;">OUR SPECIALIZATION</div>
+    <h2 style="font-size: 36px;">WHAT WE DO</h2>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 50px; margin-top: 40px;">
+      <div style="max-width: 220px;">
+        <i class="fa-solid fa-house fa-2x" style="color: #FF7F50;"></i>
+        <h4 style="margin-top: 15px;">INTERIOR DESIGN</h4>
+        <p style="font-size: 14px; color: #555;">As you might expect of a company that began as a high-end interiors contractor, we pay strict attention.</p>
+      </div>
+      <div style="max-width: 220px;">
+        <i class="fa-solid fa-building fa-2x" style="color: #FF7F50;"></i>
+        <h4 style="margin-top: 15px;">OFFICE DESIGN</h4>
+        <p style="font-size: 14px; color: #555;">Our commitment to exceptional quality has never wavered. Today ranks as one of the most highly-regarded construction.</p>
+      </div>
+      <div style="max-width: 220px;">
+        <i class="fa-solid fa-house-laptop fa-2x" style="color: #FF7F50;"></i>
+        <h4 style="margin-top: 15px;">HOME DESIGN</h4>
+        <p style="font-size: 14px; color: #555;">Interdisciplinary architectural studio with cultural, residential and commercial projects built worldwide.</p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="subheading">TESTIMONIALS</div>
+<h2>What Your Clients Say</h2>
+
+<div class="testimonial-section" id="testimonial">
+  <div class="arrow left" onclick="changeTestimonial(-1)">&#8592;</div>
+  <div class="testimonial-text" id="testimonialText">
+    “Fast and accurate at solving mental math problems involving addition, subtraction, multiplication, division and percentages but without high-level skills that might be required in jobs requiring complex calculation and analysis.”
+  </div>
+  <div class="arrow right" onclick="changeTestimonial(1)">&#8594;</div>
+
+  <div class="testimonial-avatar">
+    <img src="Reene.jpeg" alt="Avatar" id="testimonialPhoto">
+    <div class="testimonial-name" id="testimonialName">Renee Calhoun</div>
+    <div class="testimonial-role" id="testimonialRole">CEO Woolley</div>
+  </div>
+</div>
+
+<script>
+  const testimonials = [
+    {
+      text: "Fast and accurate at solving mental math problems involving addition, subtraction, multiplication, division and percentages but without high-level skills that might be required in jobs requiring complex calculation and analysis.",
+      name: "Renee Calhoun",
+      role: "CEO Woolley",
+      photo: "Reene.jpeg"
+    },
+    {
+      text: "Their team was exceptional in turning our vague idea into a fully functional product. Highly recommend them!",
+      name: "Dolores Webster",
+      role: "CEO & Founder",
+      photo: "CE0 (1).jpg"
+    },
+    {
+      text: "Reliable, skilled, and creative. They helped our architecture firm stand out from the rest.",
+      name: "Jonathan Mcdaniel",
+      role: "Architect",
+      photo: "Arc.jpg"
+    }
+    
+  ];
+       
+  let index = 0;
+
+  function changeTestimonial(direction) {
+    index += direction;
+    if (index < 0) index = testimonials.length - 1;
+    if (index >= testimonials.length) index = 0;
+
+    document.getElementById("testimonialText").innerText = "“" + testimonials[index].text + "”";
+    document.getElementById("testimonialName").innerText = testimonials[index].name;
+    document.getElementById("testimonialRole").innerText = testimonials[index].role;
+    document.getElementById("testimonialPhoto").src = testimonials[index].photo;
+  }
+  
+</script>
+<!-- WHY CHOOSE US SECTION (Smaller Height & Inline Style) -->
+<section style="position: relative; background: url('imgban.jpg') no-repeat center center/cover; height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+
+  <!-- Dark Overlay -->
+  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1;"></div>
+  
+  <!-- Content -->
+  <div style="position: relative; z-index: 2; color: #fff; padding: 0 20px;">
+    <h4 style="color: #f0c58b; margin-bottom: 20px; font-size: 18px; letter-spacing: 1px;">WHY CHOOSE US?</h4>
+    
+    <h1 style="font-size: 32px; font-weight: 700; text-transform: uppercase; line-height: 1.4; max-width: 800px; margin: 0 auto;">
+      OUR ABILITY TO DELIVER OUTSTANDING RESULTS FOR OUR CLIENTS STARTS WITH OUR TEAM OF SMART.
+    </h1>
+    
+    <a href="#contact" style="display: inline-block; margin-top: 30px; background-color: #c89b64; color: #fff; padding: 12px 24px; font-weight: bold; border-radius: 6px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: background 0.3s ease, transform 0.3s ease;"
+       onmouseover="this.style.background='#e0a962'; this.style.transform='scale(1.05)'"
+       onmouseout="this.style.background='#c89b64'; this.style.transform='scale(1)'">
+      Contact Us
+    </a>
+  </div>
+</section>
+<!-- BLOG SECTION (Inline Style) -->
+<section style="padding: 60px 20px; background-color: #fff; text-align: center; font-family: sans-serif;">
+  
+  <!-- Heading -->
+  <div style="margin-bottom: 40px;">
+    <p style="color: #c89b64; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; margin: 0;">Latest News</p>
+    <h2 style="font-size: 32px; font-weight: bold; margin: 10px 0 0;">From Our Blog</h2>
+    <a href="#all-posts" style="position: absolute; right: 40px; top: 80px; font-weight: bold; text-decoration: none; color: #000; border: 2px solid #000; padding: 6px 12px; border-radius: 4px;">View All</a>
+  </div>
+
+  <!-- Blog Cards Container -->
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto;">
+    
+    <!-- Blog Card 1 -->
+    <div style="background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.1); width: 300px; text-align: left; border-radius: 8px; overflow: hidden;">
+      <img src="Archit.jpg" alt="Blog 1" style="width: 100%; height: 180px; object-fit: cover;">
+      <div style="padding: 20px;">
+        <p style="color: gray; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;">Architecture</p>
+        <h3 style="font-size: 18px; font-weight: bold; margin: 10px 0;">Target and Amazon Shopping List for Home Stagers</h3>
+        <a href="#" style="color: #c89b64; font-weight: bold; text-decoration: none;">Read more</a>
+      </div>
+    </div>
+
+    <!-- Blog Card 2 -->
+    <div style="background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.1); width: 300px; text-align: left; border-radius: 8px; overflow: hidden;">
+      <img src="inter.jpg" alt="Blog 2" style="width: 100%; height: 180px; object-fit: cover;">
+      <div style="padding: 20px;">
+        <p style="color: gray; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;">Interior</p>
+        <h3 style="font-size: 18px; font-weight: bold; margin: 10px 0;">6 Ideas for Team Building and Employee Appreciation for Home Stagers</h3>
+        <a href="#" style="color: #c89b64; font-weight: bold; text-decoration: none;">Read more</a>
+      </div>
+    </div>
+
+    <!-- Blog Card 3 -->
+    <div style="background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.1); width: 300px; text-align: left; border-radius: 8px; overflow: hidden;">
+      <img src="planin.jpg" alt="Blog 3" style="width: 100%; height: 180px; object-fit: cover;">
+      <div style="padding: 20px;">
+        <p style="color: gray; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;">Planning</p>
+        <h3 style="font-size: 18px; font-weight: bold; margin: 10px 0;">How to Find the Best Price Structure for Your Home Staging Services</h3>
+        <a href="#" style="color: #c89b64; font-weight: bold; text-decoration: none;">Read more</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- FOOTER SECTION (Full Width, No Side Spacing) -->
+<footer style="background: url('imgfoo.jpg') no-repeat center center/cover; color: #fff; padding: 40px 0; font-family: sans-serif; animation: fadeInUp 1.2s ease;">
+  
+  <!-- Inner Container -->
+  <div style="max-width: 1200px; margin: auto; padding: 0 20px;">
+
+    <!-- Call to Action -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 40px;">
+      <h2 style="font-size: 24px; margin: 0;">READY TO WORK WITH US?</h2>
+      <input type="email" placeholder="Enter your email..." required 
+            style="padding: 10px; width: 300px; border: none; outline: none; border-radius: 4px;">
+      <button style="padding: 11px; background: orange; border: none; color: #fff; cursor: pointer; border-radius: 4px; transition: background 0.3s, transform 0.3s;"
+              onmouseover="this.style.background='#ff9800'; this.style.transform='scale(1.1)'"
+              onmouseout="this.style.background='orange'; this.style.transform='scale(1)'">
+        <i class="fa fa-paper-plane"></i>
+      </button>
+    </div>
+
+  <!-- Footer Grid -->
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-top: 40px; gap: 30px;">
+
+  <!-- Column 1 -->
+  <div style="flex: 1; min-width: 300px; margin-bottom: 20px;">
+    <h3 style="font-size: 20px;">Staging<span style="color: orange;">.</span></h3>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">
+      7176 Blue Spring Lane<br>Santa Monica, CA 90403
+    </p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">
+      info.colorlib@gmail.com<br>+84 123 456 789
+    </p>
+    <div style="margin-top: 10px;">
+      <i class="fab fa-facebook-f" style="margin-right: 10px; cursor: pointer; transition: transform 0.3s, color 0.3s; color: #fff;"
+        onmouseover="this.style.transform='scale(1.2)'; this.style.color='orange';"
+        onmouseout="this.style.transform='scale(1)'; this.style.color='#fff';"></i>
+      <i class="fab fa-twitter" style="margin-right: 10px; cursor: pointer; transition: transform 0.3s, color 0.3s; color: #fff;"
+        onmouseover="this.style.transform='scale(1.2)'; this.style.color='orange';"
+        onmouseout="this.style.transform='scale(1)'; this.style.color='#fff';"></i>
+      <i class="fab fa-instagram" style="margin-right: 10px; cursor: pointer; transition: transform 0.3s, color 0.3s; color: #fff;"
+        onmouseover="this.style.transform='scale(1.2)'; this.style.color='orange';"
+        onmouseout="this.style.transform='scale(1)'; this.style.color='#fff';"></i>
+      <i class="fab fa-linkedin-in" style="margin-right: 10px; cursor: pointer; transition: transform 0.3s, color 0.3s; color: #fff;"
+        onmouseover="this.style.transform='scale(1.2)'; this.style.color='orange';"
+        onmouseout="this.style.transform='scale(1)'; this.style.color='#fff';"></i>
+    </div>
+  </div>
+  
+
+  <!-- Column 2 -->
+  <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+    <h4 style="color: orange; margin-bottom: 10px; font-size: 1.1rem;">Company</h4>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">About Us</p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">Services</p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">Our Works</p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">Career</p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">FAQs</p>
+  </div>
+
+  <!-- Column 3 -->
+  <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+    <h4 style="color: orange; margin-bottom: 10px; font-size: 1.1rem;">Services</h4>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">Architecture</p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">Interior Design</p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">Exterior Design</p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">Planning</p>
+  </div>
+
+  <!-- Column 4 -->
+  <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+    <h4 style="color: orange; margin-bottom: 10px; font-size: 1.1rem;">Get in Touch</h4>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">
+      7176 Blue Spring Lane<br>Santa Monica, CA 90403
+    </p>
+    <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">
+      info.colorlib@gmail.com<br>+84 123 456 789
+    </p>
+  </div>
+
+</div>
+
+<!-- Copyright -->
+<div style="border-top: 1px solid #333; text-align: center; padding: 20px 0; font-size: 0.9rem; margin-top: 40px;">
+  <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0 0 15px 0;">
+    Copyright © 2025 All rights reserved | This template is made with ♡ by Colorlib
+  </p>
+  <p style="font-size: 15px; font-family: 'Poppins', sans-serif; color: #707070; font-weight: 400; line-height: 26px; margin: 0;">
+    <a href="#" style="color: orange; text-decoration: none;">Terms of use</a> | <a href="#" style="color: orange; text-decoration: none;">Privacy Policy</a>
+  </p>
+</div>
+
+
+  </div>
+</footer>
+
+
+</body>
+</html>
